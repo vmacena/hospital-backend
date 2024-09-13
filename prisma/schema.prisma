@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  id       Int      @id @default(autoincrement())
+  name     String
+  email    String   @unique
+  password String
+  roleId   Int
+  role     userRole @relation(fields: [roleId], references: [id])
+  admin    admin?
+  doctor   doctor?
+  patient  patient?
+}
+
+model admin {
+  id     Int   @id
+  user   user  @relation(fields: [id], references: [id])
+}
+
+model doctor {
+  id          Int      @id
+  specialty   String
+  user        user     @relation(fields: [id], references: [id])
+  appointments appointment[]
+}
+
+model patient {
+  id            Int      @id
+  birthDate     DateTime
+  address       String
+  user          user     @relation(fields: [id], references: [id])
+  appointments  appointment[]
+  Exams         exam[]
+}
+
+model appointment {
+  id         Int      @id @default(autoincrement())
+  patient    patient  @relation(fields: [patientId], references: [id])
+  doctor     doctor   @relation(fields: [doctorId], references: [id])
+  patientId  Int
+  doctorId   Int
+  date       DateTime
+  time       DateTime
+  statusId   Int
+  status     appointmentStatus @relation(fields: [statusId], references: [id])
+}
+
+model exam {
+  id         Int      @id @default(autoincrement())
+  patient    patient  @relation(fields: [patientId], references: [id])
+  patientId  Int
+  type       String
+  date       DateTime
+  result     String?
+}
+
+model userRole {
+  id    Int    @id @default(autoincrement())
+  role  String @unique
+  users user[]
+}
+
+model appointmentStatus {
+  id      Int    @id @default(autoincrement())
+  status  String @unique
+  appointments appointment[]
+}
