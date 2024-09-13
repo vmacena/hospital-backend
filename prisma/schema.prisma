@@ -7,37 +7,36 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model user {
-  id       Int      @id @default(autoincrement())
-  name     String
-  email    String   @unique
-  password String
-  roleId   Int
-  role     userRole @relation(fields: [roleId], references: [id])
-  admin    admin?
-  doctor   doctor?
-  patient  patient?
-}
-
 model admin {
-  id     Int   @id
-  user   user  @relation(fields: [id], references: [id])
+  id       Int      @id @default(autoincrement())
+  record   String   @unique
+  logs     logAccess[]
 }
 
 model doctor {
-  id          Int      @id
+  id          Int      @id @default(autoincrement())
+  crm         String   @unique
+  nameDoctor        String
   specialty   String
-  user        user     @relation(fields: [id], references: [id])
   appointments appointment[]
+  exams       exam[]
 }
 
 model patient {
-  id            Int      @id
-  birthDate     DateTime
-  address       String
-  user          user     @relation(fields: [id], references: [id])
-  appointments  appointment[]
-  Exams         exam[]
+  id          Int      @id @default(autoincrement())
+  susNumber   BigInt   @unique
+  namePatient        String
+  email       String   @unique
+  appointments appointment[]
+  exams       exam[]
+}
+
+model logAccess {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  userType  String
+  timestamp DateTime @default(now())
+  admin admin[]
 }
 
 model appointment {
@@ -48,27 +47,16 @@ model appointment {
   doctorId   Int
   date       DateTime
   time       DateTime
-  statusId   Int
-  status     appointmentStatus @relation(fields: [statusId], references: [id])
+  status     String
 }
 
 model exam {
   id         Int      @id @default(autoincrement())
   patient    patient  @relation(fields: [patientId], references: [id])
+  doctor     doctor   @relation(fields: [doctorId], references: [id])
   patientId  Int
+  doctorId   Int
   type       String
   date       DateTime
   result     String?
-}
-
-model userRole {
-  id    Int    @id @default(autoincrement())
-  role  String @unique
-  users user[]
-}
-
-model appointmentStatus {
-  id      Int    @id @default(autoincrement())
-  status  String @unique
-  appointments appointment[]
 }
