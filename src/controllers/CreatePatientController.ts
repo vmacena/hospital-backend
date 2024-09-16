@@ -9,7 +9,6 @@ class CreatePatientController {
     const createPatientService = new CreatePatientService();
     const patient = await createPatientService.execute(namePatient, email, accessLevelId);
 
-    // Converta o BigInt para string antes de enviar a resposta
     const responsePatient = {
       ...patient,
       susNumber: patient.susNumber.toString(),

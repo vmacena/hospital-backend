@@ -10,7 +10,6 @@ class LoginPatientController {
     try {
       const { patient, token } = await loginPatientService.execute(BigInt(susNumber));
 
-      // Converta o BigInt para string antes de enviar a resposta
       const responsePatient = {
         ...patient,
         susNumber: patient.susNumber.toString(),
