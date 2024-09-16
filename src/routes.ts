@@ -1,14 +1,19 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
 import { CreateAdminController } from "./controllers/CreateAdminController";
 import { LoginAdminController } from "./controllers/LoginAdminController";
+import { CreatePatientController } from "./controllers/CreatePatientController";
+import { LoginPatientController } from "./controllers/LoginPatientController";
 
 const router = Router();
 
-router.get("/test", (req: Request, res: Response) => {
-  res.json({ message: "approved" });
-});
+const createAdminController = new CreateAdminController();
+const loginAdminController = new LoginAdminController();
+const createPatientController = new CreatePatientController();
+const loginPatientController = new LoginPatientController();
 
-router.post("/register/admin", new CreateAdminController().handle);
-router.post("/login/admin", new LoginAdminController().handle);
+router.post("/register/admin", createAdminController.handle);
+router.post("/login/admin", loginAdminController.handle);
+router.post("/patient/register", createPatientController.handle);
+router.post("/login", loginPatientController.handle);
 
-export default router;
+export { router };

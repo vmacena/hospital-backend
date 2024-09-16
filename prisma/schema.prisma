@@ -7,36 +7,57 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model AccessLevel {
+  id       Int       @id @default(autoincrement())
+  level    String    @unique
+  admins   admin[]
+  doctors  doctor[]
+  patients patient[]
+}
+
 model admin {
-  id       Int      @id @default(autoincrement())
-  record   String   @unique
-  logs     logAccess[]
+  id            Int         @id @default(autoincrement())
+  record        String      @unique
+  logs          logAccess[]
+  accessLevel   AccessLevel @relation(fields: [accessLevelId], references: [id])
+  accessLevelId Int
 }
 
 model doctor {
-  id          Int      @id @default(autoincrement())
-  crm         String   @unique
-  nameDoctor        String
-  specialty   String
-  appointments appointment[]
-  exams       exam[]
+  id            Int         @id @default(autoincrement())
+  crm           String      @unique
+  nameDoctor    String
+  specialty     String
+  appointments  appointment[]
+  exams         exam[]
+  logs          logAccess[]
+  accessLevel   AccessLevel @relation(fields: [accessLevelId], references: [id])
+  accessLevelId Int
 }
 
 model patient {
-  id          Int      @id @default(autoincrement())
-  susNumber   BigInt   @unique
-  namePatient        String
-  email       String   @unique
-  appointments appointment[]
-  exams       exam[]
+  id            Int         @id @default(autoincrement())
+  susNumber     BigInt      @unique
+  namePatient   String
+  email         String      @unique
+  appointments  appointment[]
+  exams         exam[]
+  logs          logAccess[]
+  accessLevel   AccessLevel @relation(fields: [accessLevelId], references: [id])
+  accessLevelId Int
 }
 
 model logAccess {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  userType  String
-  timestamp DateTime @default(now())
-  admin admin[]
+  id         Int      @id @default(autoincrement())
+  adminId    Int?
+  doctorId   Int?
+  patientId  Int?
+  userType   String
+  timestamp  DateTime @default(now())
+  
+  admin      admin?   @relation(fields: [adminId], references: [id])
+  doctor     doctor?  @relation(fields: [doctorId], references: [id])
+  patient    patient? @relation(fields: [patientId], references: [id])
 }
 
 model appointment {

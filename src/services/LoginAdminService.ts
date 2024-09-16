@@ -11,7 +11,10 @@ class LoginAdminService {
   async execute(record: string) {
     const admin = await this.prisma.admin.findUnique({
       where: {
-        record: record,
+        record,
+      },
+      include: {
+        accessLevel: true,
       },
     });
 
@@ -21,8 +24,10 @@ class LoginAdminService {
 
     const token = jwt.sign({ 
         id: admin.id, 
-        record: admin.record }, 
-        this.secret, { expiresIn: "1h", });
+        record: admin.record,
+        accessLevel: admin.accessLevel.level 
+      }, 
+      this.secret, { expiresIn: "1h", });
 
     return { admin, token };
   }

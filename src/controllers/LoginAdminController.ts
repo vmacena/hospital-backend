@@ -9,7 +9,7 @@ class LoginAdminController {
 
     try {
       const { admin, token } = await loginAdminService.execute(record);
-      return res.json({ id: admin.id, token });
+      return res.json({ id: admin.id, token, accessLevel: admin.accessLevel.level });
     } catch (error: any) {
       return res.status(404).json({ message: error.message });
     }

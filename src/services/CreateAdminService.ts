@@ -1,10 +1,9 @@
 import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcryptjs";
 
 class CreateAdminService {
   private prisma = new PrismaClient();
 
-  async execute(record: string) {
+  async execute(record: string, accessLevelId: number) {
     const existingAdmin = await this.prisma.admin.findUnique({
       where: {
         record,
@@ -15,11 +14,10 @@ class CreateAdminService {
       throw new Error("Admin already registered with this record.");
     }
 
-    //const hashedRecord = await bcrypt.hash(record, 10);
-
     const admin = await this.prisma.admin.create({
       data: {
-        record: record,
+        record,
+        accessLevelId,
       },
     });
 
