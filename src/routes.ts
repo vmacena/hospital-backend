@@ -6,6 +6,9 @@ import { LoginPatientController } from "./controllers/patient/LoginPatientContro
 import { CreateDoctorController } from "./controllers/doctor/CreateDoctorController";
 import { LoginDoctorController } from "./controllers/doctor/LoginDoctorController";
 import { FindAllPatientsController } from "./controllers/doctor/FindAllPatientsController";
+import { GetPatientDataController } from "./controllers/patient/GetPatientDataController";
+import { authenticateToken } from "./middlewares/authenticateToken";
+
 
 const router = Router();
 
@@ -13,6 +16,7 @@ const createAdminController = new CreateAdminController();
 const loginAdminController = new LoginAdminController();
 const createPatientController = new CreatePatientController();
 const loginPatientController = new LoginPatientController();
+const getPatientDataController = new GetPatientDataController();
 const createDoctorController = new CreateDoctorController();
 const loginDoctorController = new LoginDoctorController();
 const findAllPatientsController = new FindAllPatientsController();
@@ -22,6 +26,7 @@ router.post("/admin/login", loginAdminController.handle);
 
 router.post("/patient/register", createPatientController.handle);
 router.post("/patient/login", loginPatientController.handle);
+router.get("/patient/:id", authenticateToken, getPatientDataController.handle);
 
 router.post("/doctor/register", createDoctorController.handle);
 router.post("/doctor/login", loginDoctorController.handle);

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { LoginAdminService } from "../services/LoginAdminService";
+import { LoginAdminService } from "../../services/admin/LoginAdminService";
 
 class LoginAdminController {
   async handle(req: Request, res: Response) {
