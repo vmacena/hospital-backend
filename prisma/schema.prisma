@@ -48,16 +48,17 @@ model patient {
 }
 
 model logAccess {
-  id         Int      @id @default(autoincrement())
-  adminId    Int?
-  doctorId   Int?
-  patientId  Int?
-  userType   String
-  timestamp  DateTime @default(now())
+  id          Int      @id @default(autoincrement())
+  adminId     Int?
+  doctorId    Int?
+  patientId   Int?
+  userType    String
+  accessLevel String
+  timestamp   DateTime @default(now())
   
-  admin      admin?   @relation(fields: [adminId], references: [id])
-  doctor     doctor?  @relation(fields: [doctorId], references: [id])
-  patient    patient? @relation(fields: [patientId], references: [id])
+  admin       admin?   @relation(fields: [adminId], references: [id])
+  doctor      doctor?  @relation(fields: [doctorId], references: [id])
+  patient     patient? @relation(fields: [patientId], references: [id])
 }
 
 model appointment {

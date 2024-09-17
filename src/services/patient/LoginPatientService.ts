@@ -1,6 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import { CreateLogAccessService } from "../log/CreateLogAccessService";
+
 
 dotenv.config();
 
@@ -28,6 +30,9 @@ class LoginPatientService {
         accessLevel: patient.accessLevel.level 
       }, 
       this.secret, { expiresIn: "1h", });
+
+    const createLogAccessService = new CreateLogAccessService();
+    await createLogAccessService.execute(patient.id, "patient", patient.accessLevel.level);
 
     return { patient, token };
   }

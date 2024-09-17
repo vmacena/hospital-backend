@@ -15,8 +15,12 @@ class LoginPatientController {
         susNumber: patient.susNumber.toString(),
       };
 
-      return res.json({ id: responsePatient.id, token, accessLevel: responsePatient.accessLevel.level, susNumber: responsePatient.susNumber });
-    } catch (error: any) {
+      return res.json({ 
+        id: responsePatient.id, 
+        token, 
+        accessLevel: responsePatient.accessLevel.level, 
+        susNumber: responsePatient.susNumber 
+    }); } catch (error: any) {
       return res.status(404).json({ message: error.message });
     }
   }

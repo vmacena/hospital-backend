@@ -10,7 +10,6 @@ class GetPatientDataController {
     try {
       const patient = await getPatientDataService.execute(Number(id));
 
-      // Converta o BigInt para string antes de enviar a resposta
       const responsePatient = {
         ...patient,
         susNumber: patient.susNumber.toString(),

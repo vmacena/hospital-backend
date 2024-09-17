@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import { CreateLogAccessService } from "../log/CreateLogAccessService";
 
 dotenv.config();
 
@@ -19,15 +20,21 @@ class LoginAdminService {
     });
 
     if (!admin) {
-      throw new Error("Credential not found.");
+      throw new Error("Admin não encontrado.");
     }
 
-    const token = jwt.sign({ 
+    const token = jwt.sign(
+      { 
         id: admin.id, 
         record: admin.record,
         accessLevel: admin.accessLevel.level 
       }, 
-      this.secret, { expiresIn: "1h", });
+      this.secret, 
+      { expiresIn: "1h" }
+    );
+
+    const createLogAccessService = new CreateLogAccessService();
+    await createLogAccessService.execute(admin.id, "admin", admin.accessLevel.level);
 
     return { admin, token };
   }

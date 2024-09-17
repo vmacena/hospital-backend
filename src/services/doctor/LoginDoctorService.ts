@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import { CreateLogAccessService } from "../log/CreateLogAccessService";
 
 dotenv.config();
 
@@ -19,15 +20,21 @@ class LoginDoctorService {
     });
 
     if (!doctor) {
-      throw new Error("CRM não encontrado.");
+      throw new Error("Doutor não encontrado.");
     }
 
-    const token = jwt.sign({ 
+    const token = jwt.sign(
+      { 
         id: doctor.id, 
         crm: doctor.crm,
         accessLevel: doctor.accessLevel.level 
       }, 
-      this.secret, { expiresIn: "1h", });
+      this.secret, 
+      { expiresIn: "1h" }
+    );
+
+    const createLogAccessService = new CreateLogAccessService();
+    await createLogAccessService.execute(doctor.id, "doctor", doctor.accessLevel.level);
 
     return { doctor, token };
   }

@@ -7,8 +7,10 @@ import { CreateDoctorController } from "./controllers/doctor/CreateDoctorControl
 import { LoginDoctorController } from "./controllers/doctor/LoginDoctorController";
 import { FindAllPatientsController } from "./controllers/doctor/FindAllPatientsController";
 import { GetPatientDataController } from "./controllers/patient/GetPatientDataController";
-import { ScheduleExamController } from "./controllers/exam/ScheduleExamController"; // Adicione esta linha
+import { ScheduleExamController } from "./controllers/exam/ScheduleExamController";
+import { GetAllLogsController } from "./controllers/log/GetAllLogsController";
 import { authenticateToken } from "./middlewares/authenticateToken";
+import { checkAdminAccess } from "./middlewares/checkAdminAccess"; // Importe o middleware
 
 const router = Router();
 
@@ -20,7 +22,8 @@ const getPatientDataController = new GetPatientDataController();
 const createDoctorController = new CreateDoctorController();
 const loginDoctorController = new LoginDoctorController();
 const findAllPatientsController = new FindAllPatientsController();
-const scheduleExamController = new ScheduleExamController(); // Adicione esta linha
+const scheduleExamController = new ScheduleExamController();
+const getAllLogsController = new GetAllLogsController();
 
 router.post("/admin/register", createAdminController.handle);
 router.post("/admin/login", loginAdminController.handle);
@@ -33,6 +36,8 @@ router.post("/doctor/register", createDoctorController.handle);
 router.post("/doctor/login", loginDoctorController.handle);
 router.get("/doctor/patients", findAllPatientsController.handle);
 
-router.post("/exam/schedule", authenticateToken, scheduleExamController.handle); // Adicione esta linha
+router.post("/exam/schedule", authenticateToken, scheduleExamController.handle);
+
+router.get("/logs", authenticateToken, checkAdminAccess, getAllLogsController.handle); // Adicione o middleware aqui
 
 export { router };
