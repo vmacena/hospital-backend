@@ -19,7 +19,7 @@ class FindAllPatientsController {
 
         let crm;
         try {
-            const decoded = jwt.verify(token, this.secret) as jwt.JwtPayload;
+            const decoded = jwt.verify(token, secret) as jwt.JwtPayload;
             crm = decoded.crm;
         } catch (err) {
             return res.status(401).json({ err });
