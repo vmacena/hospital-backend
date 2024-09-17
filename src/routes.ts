@@ -24,7 +24,7 @@ router.post("/patient/register", createPatientController.handle);
 router.post("/patient/login", loginPatientController.handle);
 
 router.post("/doctor/register", createDoctorController.handle);
-router.post("/doctor/register", loginDoctorController.handle);
+router.post("/doctor/login", loginDoctorController.handle);
 router.get("/doctor/patients", findAllPatientsController.handle);
 
 
