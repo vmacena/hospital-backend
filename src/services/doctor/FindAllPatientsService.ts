@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { convertBigIntToString } from "../log/utils";
 
 class FindAllPatientsService {
 
@@ -10,7 +11,8 @@ class FindAllPatientsService {
               crm
             },
             include: {
-                appointments: true
+                appointments: true,
+                exams: true
             }
           });
       
@@ -18,11 +20,26 @@ class FindAllPatientsService {
             throw new Error("Doctor with this crm does not exist.");
           }
         
-        const patients = existingDoctor.appointments
-        .map(appointment => this.prisma.patient.findUnique({where: {id: appointment.patientId}}))
-        .filter((value, index, self) => self.indexOf(value) === index)
+        const patientsByAppointmentPromises = existingDoctor.appointments.map(appointment =>
+          this.prisma.patient.findUnique({ where: { id: appointment.patientId } })
+        );
 
-        return patients;
+        const patientsByExamPromises = existingDoctor.exams.map(exam =>
+          this.prisma.patient.findUnique({ where: { id: exam.patientId } })
+        );
+
+        const patientsByAppointment = await Promise.all(patientsByAppointmentPromises);
+        const patientsByExam = await Promise.all(patientsByExamPromises);
+
+        const allPatients = [...patientsByAppointment, ...patientsByExam];
+        const uniquePatients = allPatients.filter((patient, index, self) =>
+          patient && self.findIndex(p => p?.id === patient.id) === index
+        );
+
+        var serializedPatients = convertBigIntToString(uniquePatients);
+
+        console.log(serializedPatients);
+        return serializedPatients;
     } 
 
 }

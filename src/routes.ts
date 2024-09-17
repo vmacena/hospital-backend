@@ -29,6 +29,7 @@ const getAllLogsController = new GetAllLogsController();
 
 router.post("/admin/register", createAdminController.handle);
 router.post("/admin/login", loginAdminController.handle);
+router.post("/admin/patients-by-doctor", authenticateToken, checkAdminAccess, findAllPatientsController.handle);
 
 router.post("/patient/register", createPatientController.handle);
 router.post("/patient/login", loginPatientController.handle);
