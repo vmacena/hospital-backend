@@ -10,6 +10,7 @@ class LoginDoctorService {
   private secret = process.env.JWT_SECRET as string;
 
   async execute(crm: string) {
+    console.log(this.secret);
     const doctor = await this.prisma.doctor.findUnique({
       where: {
         crm,

@@ -11,6 +11,8 @@ import { ScheduleExamController } from "./controllers/exam/ScheduleExamControlle
 import { GetAllLogsController } from "./controllers/log/GetAllLogsController";
 import { authenticateToken } from "./middlewares/authenticateToken";
 import { checkAdminAccess } from "./middlewares/checkAdminAccess"; // Importe o middleware
+import dotenv from 'dotenv';
+dotenv.config();
 
 const router = Router();
 
@@ -34,7 +36,7 @@ router.get("/patient/:id", authenticateToken, getPatientDataController.handle);
 
 router.post("/doctor/register", createDoctorController.handle);
 router.post("/doctor/login", loginDoctorController.handle);
-router.get("/doctor/patients", findAllPatientsController.handle);
+router.get("/doctor/patients", authenticateToken, findAllPatientsController.handle);
 
 router.post("/exam/schedule", authenticateToken, scheduleExamController.handle);
 
