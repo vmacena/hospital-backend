@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 class CreateDoctorService {
   private prisma = new PrismaClient();
 
-  async execute(nameDoctor: string, specialty: string, crm: string, accessLevelId: number) {
+  async execute(crm: string, nameDoctor: string, specialty: string) {
     const existingDoctor = await this.prisma.doctor.findUnique({
       where: {
         crm
@@ -13,6 +13,9 @@ class CreateDoctorService {
     if (existingDoctor) {
       throw new Error("Doctor already registered with this crm.");
     }
+    
+
+    const accessLevelId = 2;
 
     const doctor = await this.prisma.doctor.create({
       data: {
