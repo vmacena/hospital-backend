@@ -15,3 +15,13 @@
 - `json: ` {
   "record": "00"
 }
+
+## Prisma
+
+- npx prisma migrate dev --name new migrate name
+
+- npx prisma migrate status
+
+- npx prisma generate
+
+- npx prisma studio

@@ -68,7 +68,6 @@ model appointment {
   patientId  Int
   doctorId   Int
   date       DateTime
-  time       DateTime
   status     String
 }
 
