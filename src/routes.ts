@@ -9,10 +9,9 @@ import { FindAllPatientsController } from "./controllers/doctor/FindAllPatientsC
 import { GetPatientDataController } from "./controllers/patient/GetPatientDataController";
 import { ScheduleExamController } from "./controllers/exam/ScheduleExamController";
 import { GetAllLogsController } from "./controllers/log/GetAllLogsController";
+import { FindDoctorAppointmentsAndExamsController } from "./controllers/doctor/FindDoctorAppointmentsAndExamsController"; // Importe o controlador
 import { authenticateToken } from "./middlewares/authenticateToken";
 import { checkAdminAccess } from "./middlewares/checkAdminAccess"; // Importe o middleware
-import dotenv from 'dotenv';
-dotenv.config();
 
 const router = Router();
 
@@ -26,10 +25,10 @@ const loginDoctorController = new LoginDoctorController();
 const findAllPatientsController = new FindAllPatientsController();
 const scheduleExamController = new ScheduleExamController();
 const getAllLogsController = new GetAllLogsController();
+const findDoctorAppointmentsAndExamsController = new FindDoctorAppointmentsAndExamsController(); // Instancie o controlador
 
 router.post("/admin/register", createAdminController.handle);
 router.post("/admin/login", loginAdminController.handle);
-router.post("/admin/patients-by-doctor", authenticateToken, checkAdminAccess, findAllPatientsController.handle);
 
 router.post("/patient/register", createPatientController.handle);
 router.post("/patient/login", loginPatientController.handle);
@@ -37,10 +36,12 @@ router.get("/patient/:id", authenticateToken, getPatientDataController.handle);
 
 router.post("/doctor/register", createDoctorController.handle);
 router.post("/doctor/login", loginDoctorController.handle);
-router.get("/doctor/patients", authenticateToken, findAllPatientsController.handle);
+router.get("/doctor/patients", findAllPatientsController.handle);
 
 router.post("/exam/schedule", authenticateToken, scheduleExamController.handle);
 
 router.get("/logs", authenticateToken, checkAdminAccess, getAllLogsController.handle); // Adicione o middleware aqui
+
+router.get("/doctor/appointments-exams", authenticateToken, findDoctorAppointmentsAndExamsController.handle); // Adicione a nova rota
 
 export { router };

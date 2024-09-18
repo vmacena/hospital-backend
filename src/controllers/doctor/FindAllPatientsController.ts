@@ -31,4 +31,5 @@ class FindAllPatientsController {
         return res.json(patients);
     }
 }
+
 export { FindAllPatientsController }
