@@ -7,7 +7,6 @@ dotenv.config();
 var secret = process.env.JWT_SECRET as string;
 
 class FindAllPatientsController {
-    private secret = process.env.JWT_SECRET as string;
 
     async handle(req: Request, res: Response){
         const authHeader = req.headers['authorization'];
