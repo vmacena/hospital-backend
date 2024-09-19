@@ -53,7 +53,6 @@ router.post("/patient/exams/", authenticateToken, patientExamController.create);
 router.get("/patient/exams/", authenticateToken, patientExamController.findAll);
 router.put("/patient/exams/update-date", authenticateToken, patientExamController.updateDate);
 router.delete("/patient/exams/cancel", authenticateToken, patientExamController.cancel);
-router.put("/patient/exams/give-result", authenticateToken, patientExamController.giveResult);
 
 router.post("/exam/schedule", authenticateToken, scheduleExamController.handle); // sorry :(
 

@@ -63,13 +63,4 @@ export class PatientExamController {
     return response.json(exam);
   }
 
-  async giveResult(request: Request, response: Response) {
-    const { examId, result } = request.body;
-
-    const giveExamResultService = new GiveExamResultService();
-
-    const exam = await giveExamResultService.execute(Number(examId), result);
-
-    return response.json(exam);
-  }
 }
