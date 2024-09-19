@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
-class CreateExamService{
+export class CreateExamService{
     private prisma = new PrismaClient();
     
     public async execute(crm: string, susNumber: bigint, datetime: string, type: string){

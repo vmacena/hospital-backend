@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
-class CreateAppointmentService{
+export class CreateAppointmentService{
     private prisma = new PrismaClient();
     
     public async execute(crm: string, susNumber: bigint, datetime: string){
