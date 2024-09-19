@@ -4,26 +4,43 @@ import { FindAllAppointmentsService } from "../../services/patient/appointment/F
 import { UpdateAppointmentDateService } from "../../services/patient/appointment/UpdateAppointmentDateService";
 import { CancelAppointmentService } from "../../services/patient/appointment/CancelAppointmentService";
 import { FinishAppointmentService } from "../../services/patient/appointment/FinishAppointmentService";
+import { getFromJwt } from "../utils/FindSusNumber";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export class PatientAppointmentController {
+  private secret = process.env.JWT_SECRET as string;
+
   async create(request: Request, response: Response) {
-    const { crm, susNumber, datetime } = request.body;
+    const { crm, datetime } = request.body;
+    const authHeader = request.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
 
-    const createAppointmentService = new CreateAppointmentService();
-
-    const appointment = await createAppointmentService.execute(crm, susNumber, datetime);
-
-    return response.json(appointment);
+    try{
+      const susNumber = await getFromJwt(token!, this.secret);
+      const createAppointmentService = new CreateAppointmentService();
+      
+      const appointment = await createAppointmentService.execute(crm, susNumber, datetime);
+      return response.json(appointment);
+    } catch (err) {
+      return response.status(401).json({ err });
+    }
   }
 
   async findAll(request: Request, response: Response) {
-    const { susNumber } = request.params;
+    const authHeader = request.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
 
-    const findAllAppointmentsService = new FindAllAppointmentsService();
+    try{
+      const susNumber = await getFromJwt(token!, this.secret);
+      const findAllAppointmentsService = new FindAllAppointmentsService();
 
-    const appointments = await findAllAppointmentsService.execute(BigInt(susNumber));
-
-    return response.json(appointments);
+      const appointments = await findAllAppointmentsService.execute(susNumber);
+      return response.json(appointments);
+    } catch (err) {
+      return response.status(401).json({ err });
+    }
   }
 
   async updateDate(request: Request, response: Response) {
