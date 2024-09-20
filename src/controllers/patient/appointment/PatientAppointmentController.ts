@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import { CreateAppointmentService } from "../../services/patient/appointment/CreateAppointmentService";
-import { FindAllAppointmentsService } from "../../services/patient/appointment/FindAllAppointmentsService";
-import { UpdateAppointmentDateService } from "../../services/patient/appointment/UpdateAppointmentDateService";
-import { CancelAppointmentService } from "../../services/patient/appointment/CancelAppointmentService";
-import { FinishAppointmentService } from "../../services/patient/appointment/FinishAppointmentService";
-import { getFromJwt } from "../utils/FindSusNumber";
+import { CreateAppointmentService } from "../../../services/patient/appointment/CreateAppointmentService";
+import { FindAllAppointmentsService } from "../../../services/patient/appointment/FindAllAppointmentsService";
+import { UpdateAppointmentDateService } from "../../../services/patient/appointment/UpdateAppointmentDateService";
+import { CancelAppointmentService } from "../../../services/patient/appointment/CancelAppointmentService";
+import { FinishAppointmentService } from "../../../services/patient/appointment/FinishAppointmentService";
+import { getFromJwt } from "../../utils/FindSusNumber";
 import dotenv from "dotenv";
 
 dotenv.config();
