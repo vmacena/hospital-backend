@@ -38,7 +38,7 @@ const adminAppointmentController = new AdminAppointmentController();
 const adminExamController = new AdminExamController();
 const adminStatsController = new AdminStatsController();
 
-// Admin Routes
+// admin
 router.post("/admin/register", createAdminController.handle);
 router.post("/admin/login", loginAdminController.handle);
 router.get("/admin/stats", authenticateToken, checkAdminAccess, adminStatsController.getStats);
@@ -52,15 +52,16 @@ router.delete("/admin/exams/:id", authenticateToken, checkAdminAccess, adminExam
 router.get("/admin/exams", authenticateToken, checkAdminAccess, adminExamController.findAll);
 router.get("/logs", authenticateToken, checkAdminAccess, getAllLogsController.handle);
 
-// Doctor Routes
+// doctor 
 router.post("/doctor/register", createDoctorController.handle);
 router.post("/doctor/login", loginDoctorController.handle);
 router.get("/doctor/patients", authenticateToken, findAllPatientsController.handle);
 router.get("/doctor/appointments-exams", authenticateToken, findDoctorAppointmentsAndExamsController.handle);
 
-// Patient Routes
+// patient 
 router.post("/patient/register", createPatientController.handle);
 router.post("/patient/login", loginPatientController.handle);
+router.get("/patients", authenticateToken, findAllPatientsController.handle);
 router.get("/patient/:id", authenticateToken, getPatientDataController.handle);
 router.post("/patient/appointments/", authenticateToken, patientAppointmentController.create);
 router.get("/patient/appointments/", authenticateToken, patientAppointmentController.findAll);
@@ -72,10 +73,7 @@ router.get("/patient/exams/", authenticateToken, patientExamController.findAll);
 router.put("/patient/exams/update-date", authenticateToken, patientExamController.updateDate);
 router.delete("/patient/exams/cancel", authenticateToken, patientExamController.cancel);
 
-// Exam Routes
+// exam
 router.post("/exam/schedule", authenticateToken, scheduleExamController.handle);
-
-// New Route for finding all patients
-router.get("/patients", authenticateToken, findAllPatientsController.handle);
 
 export { router };
