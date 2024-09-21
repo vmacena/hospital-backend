@@ -53,7 +53,20 @@ export class AdminExamController {
 
     async findAll(req: Request, res: Response): Promise<Response> {
         try {
-            const exams = await prisma.exam.findMany();
+            const exams = await prisma.exam.findMany({
+                include: {
+                    patient: {
+                        select: {
+                            namePatient: true
+                        }
+                    },
+                    doctor: {
+                        select: {
+                            nameDoctor: true
+                        }
+                    }
+                }
+            });
             return res.status(200).json(exams);
         } catch (error) {
             return res.status(400).json({ error: (error as Error).message });
