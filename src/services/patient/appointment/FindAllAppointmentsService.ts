@@ -10,6 +10,18 @@ export class FindAllAppointmentsService {
           susNumber: susNumber,
         }
       },
+      include: {
+        patient: {
+            select: {
+                namePatient: true
+            }
+        },
+        doctor: {
+            select: {
+                nameDoctor: true
+            }
+        }
+      }
     });
 
     return appointments;
