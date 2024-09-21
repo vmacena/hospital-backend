@@ -52,7 +52,20 @@ export class AdminAppointmentController {
 
     async findAll(req: Request, res: Response): Promise<Response> {
         try {
-            const appointments = await prisma.appointment.findMany();
+            const appointments = await prisma.appointment.findMany({
+                include: {
+                    patient: {
+                        select: {
+                            namePatient: true
+                        }
+                    },
+                    doctor: {
+                        select: {
+                            nameDoctor: true
+                        }
+                    }
+                }
+            });
             return res.status(200).json(appointments);
         } catch (error) {
             return res.status(400).json({ error: (error as Error).message });

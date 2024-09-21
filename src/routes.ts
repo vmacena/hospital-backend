@@ -16,6 +16,8 @@ import { AdminExamController } from "./controllers/admin/exam/AdminExamControlle
 import { AdminStatsController } from "./controllers/admin/stats/AdminStatsController";
 import { authenticateToken } from "./middlewares/authenticateToken";
 import { checkAdminAccess } from "./middlewares/checkAdminAccess";
+import { AdminDoctorController } from "./controllers/admin/doctor/AdminDoctorController"; // Importação adicionada
+
 
 const router = Router();
 
@@ -27,7 +29,7 @@ const loginPatientController = new LoginPatientController();
 const getPatientDataController = new GetPatientDataController();
 const createDoctorController = new CreateDoctorController();
 const loginDoctorController = new LoginDoctorController();
-const findAllPatientsController = new FindAllPatientsController(); // Instância adicionada
+const findAllPatientsController = new FindAllPatientsController(); 
 const getAllLogsController = new GetAllLogsController();
 const findDoctorAppointmentsAndExamsController = new FindDoctorAppointmentsAndExamsController();
 const patientAppointmentController = new PatientAppointmentController();
@@ -35,6 +37,8 @@ const patientExamController = new PatientExamController();
 const adminAppointmentController = new AdminAppointmentController();
 const adminExamController = new AdminExamController();
 const adminStatsController = new AdminStatsController();
+const adminDoctorController = new AdminDoctorController(); 
+
 
 // admin
 router.post("/admin/register", createAdminController.handle);
@@ -50,6 +54,8 @@ router.post("/admin/exams", authenticateToken, checkAdminAccess, adminExamContro
 router.put("/admin/exams/:id", authenticateToken, checkAdminAccess, adminExamController.update);
 router.delete("/admin/exams/:id", authenticateToken, checkAdminAccess, adminExamController.delete);
 router.get("/admin/exams", authenticateToken, checkAdminAccess, adminExamController.findAll);
+
+router.get("/admin/doctors", authenticateToken, checkAdminAccess, adminDoctorController.findAll);
 
 router.get("/logs", authenticateToken, checkAdminAccess, getAllLogsController.handle);
 
@@ -76,5 +82,4 @@ router.get("/patient/exams/", authenticateToken, patientExamController.findAll);
 router.put("/patient/exams/update-date", authenticateToken, patientExamController.updateDate);
 router.delete("/patient/exams/cancel", authenticateToken, patientExamController.cancel);
 
-// exam
 export { router };
