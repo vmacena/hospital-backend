@@ -7,7 +7,6 @@ import { CreateDoctorController } from "./controllers/doctor/CreateDoctorControl
 import { LoginDoctorController } from "./controllers/doctor/LoginDoctorController";
 import { FindAllPatientsController } from "./controllers/patient/FindAllPatientsController"; // Importação adicionada
 import { GetPatientDataController } from "./controllers/patient/GetPatientDataController";
-import { ScheduleExamController } from "./controllers/exam/ScheduleExamController";
 import { GetAllLogsController } from "./controllers/log/GetAllLogsController";
 import { FindDoctorAppointmentsAndExamsController } from "./controllers/doctor/FindDoctorAppointmentsAndExamsController";
 import { PatientAppointmentController } from "./controllers/patient/appointment/PatientAppointmentController";
@@ -29,7 +28,6 @@ const getPatientDataController = new GetPatientDataController();
 const createDoctorController = new CreateDoctorController();
 const loginDoctorController = new LoginDoctorController();
 const findAllPatientsController = new FindAllPatientsController(); // Instância adicionada
-const scheduleExamController = new ScheduleExamController();
 const getAllLogsController = new GetAllLogsController();
 const findDoctorAppointmentsAndExamsController = new FindDoctorAppointmentsAndExamsController();
 const patientAppointmentController = new PatientAppointmentController();
@@ -42,14 +40,17 @@ const adminStatsController = new AdminStatsController();
 router.post("/admin/register", createAdminController.handle);
 router.post("/admin/login", loginAdminController.handle);
 router.get("/admin/stats", authenticateToken, checkAdminAccess, adminStatsController.getStats);
+
 router.post("/admin/appointments", authenticateToken, checkAdminAccess, adminAppointmentController.create);
 router.put("/admin/appointments/:id", authenticateToken, checkAdminAccess, adminAppointmentController.update);
 router.delete("/admin/appointments/:id", authenticateToken, checkAdminAccess, adminAppointmentController.delete);
 router.get("/admin/appointments", authenticateToken, checkAdminAccess, adminAppointmentController.findAll);
+
 router.post("/admin/exams", authenticateToken, checkAdminAccess, adminExamController.create);
 router.put("/admin/exams/:id", authenticateToken, checkAdminAccess, adminExamController.update);
 router.delete("/admin/exams/:id", authenticateToken, checkAdminAccess, adminExamController.delete);
 router.get("/admin/exams", authenticateToken, checkAdminAccess, adminExamController.findAll);
+
 router.get("/logs", authenticateToken, checkAdminAccess, getAllLogsController.handle);
 
 // doctor 
@@ -63,17 +64,17 @@ router.post("/patient/register", createPatientController.handle);
 router.post("/patient/login", loginPatientController.handle);
 router.get("/patients", authenticateToken, findAllPatientsController.handle);
 router.get("/patient/", authenticateToken, getPatientDataController.handle);
+
 router.post("/patient/appointments/", authenticateToken, patientAppointmentController.create);
 router.get("/patient/appointments/", authenticateToken, patientAppointmentController.findAll);
 router.put("/patient/appointments/update-date", authenticateToken, patientAppointmentController.updateDate);
 router.delete("/patient/appointments/cancel", authenticateToken, patientAppointmentController.cancel);
 router.put("/patient/appointments/finish", authenticateToken, patientAppointmentController.finish);
+
 router.post("/patient/exams/", authenticateToken, patientExamController.create);
 router.get("/patient/exams/", authenticateToken, patientExamController.findAll);
 router.put("/patient/exams/update-date", authenticateToken, patientExamController.updateDate);
 router.delete("/patient/exams/cancel", authenticateToken, patientExamController.cancel);
 
 // exam
-router.post("/exam/schedule", authenticateToken, scheduleExamController.handle);
-
 export { router };
