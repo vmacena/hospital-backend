@@ -62,7 +62,7 @@ router.get("/doctor/appointments-exams", authenticateToken, findDoctorAppointmen
 router.post("/patient/register", createPatientController.handle);
 router.post("/patient/login", loginPatientController.handle);
 router.get("/patients", authenticateToken, findAllPatientsController.handle);
-router.get("/patient/:id", authenticateToken, getPatientDataController.handle);
+router.get("/patient/", authenticateToken, getPatientDataController.handle);
 router.post("/patient/appointments/", authenticateToken, patientAppointmentController.create);
 router.get("/patient/appointments/", authenticateToken, patientAppointmentController.findAll);
 router.put("/patient/appointments/update-date", authenticateToken, patientAppointmentController.updateDate);

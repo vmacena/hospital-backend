@@ -3,11 +3,11 @@ import { GetPatientDataService } from "../../services/patient/GetPatientDataServ
 
 class GetPatientDataController {
   async handle(req: Request, res: Response) {
-    const { id } = req.params;
+    const { id } = req.body;
 
     const getPatientDataService = new GetPatientDataService();
 
-    try {
+    
       const patient = await getPatientDataService.execute(Number(id));
 
       const responsePatient = {
@@ -16,9 +16,7 @@ class GetPatientDataController {
       };
 
       return res.json(responsePatient);
-    } catch (error: any) {
-      return res.status(404).json({ message: error.message });
-    }
+    
   }
 }
 

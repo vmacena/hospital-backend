@@ -8,9 +8,9 @@ import { getFromJwt } from "../../utils/FindSusNumber";
 import dotenv from "dotenv";
 
 dotenv.config();
+var secret = process.env.JWT_SECRET as string;
 
 export class PatientExamController {
-    private secret = process.env.JWT_SECRET as string;
 
     async create(request: Request, response: Response) {
         const { crm, datetime, type } = request.body;
@@ -18,7 +18,7 @@ export class PatientExamController {
         const token = authHeader && authHeader.split(' ')[1];
 
         try {
-            const susNumber = await getFromJwt(token!, this.secret);
+            const susNumber = await getFromJwt(token!, secret);
             const createExamService = new CreateExamService();
 
             const exam = await createExamService.execute(crm, susNumber, datetime, type);
@@ -33,7 +33,7 @@ export class PatientExamController {
         const token = authHeader && authHeader.split(' ')[1];
 
         try {
-            const susNumber = await getFromJwt(token!, this.secret);
+            const susNumber = await getFromJwt(token!, secret);
             const findAllExamsService = new FindAllExamsService();
 
             const exams = await findAllExamsService.execute(susNumber);
