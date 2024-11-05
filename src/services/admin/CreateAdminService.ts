@@ -1,9 +1,10 @@
 import { PrismaClient } from "@prisma/client";
+import { Address } from "../dto/Address";
 
 class CreateAdminService {
   private prisma = new PrismaClient();
 
-  async execute(record: string, accessLevelId: number) {
+  async execute(record: string, accessLevelId: number, address: Address) {
     const existingAdmin = await this.prisma.admin.findUnique({
       where: {
         record,
