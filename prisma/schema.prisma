@@ -18,6 +18,8 @@ model AccessLevel {
 model admin {
   id            Int         @id @default(autoincrement())
   record        String      @unique
+  address       address     @relation(fields: [addressId], references: [id])
+  addressId     Int
   logs          logAccess[]
   accessLevel   AccessLevel @relation(fields: [accessLevelId], references: [id])
   accessLevelId Int
@@ -28,6 +30,8 @@ model doctor {
   crm           String      @unique
   nameDoctor    String
   specialty     String
+  address       address     @relation(fields: [addressId], references: [id])
+  addressId     Int
   appointments  appointment[]
   exams         exam[]
   logs          logAccess[]
@@ -40,6 +44,8 @@ model patient {
   susNumber     BigInt      @unique
   namePatient   String
   email         String      @unique
+  address       address     @relation(fields: [addressId], references: [id])
+  addressId     Int
   appointments  appointment[]
   exams         exam[]
   logs          logAccess[]
@@ -80,4 +86,21 @@ model exam {
   type       String
   date       DateTime
   result     String?
+}
+
+model address{
+  id        Int      @id @default(autoincrement())
+  cep       String
+  street    String
+  district  String
+  state     String
+  city      String
+  number    Int
+  complement String?
+
+  admin admin[]
+
+  doctor doctor[]
+
+  patient patient[]
 }
