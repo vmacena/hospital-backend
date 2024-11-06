@@ -9,7 +9,8 @@ export class AdminDoctorController {
             const doctors = await prisma.doctor.findMany({
                 select: {
                     nameDoctor: true,
-                    specialty: true
+                    specialty: true,
+                    address: true
                 }
             });
             return res.status(200).json(doctors);
