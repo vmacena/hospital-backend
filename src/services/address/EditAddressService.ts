@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { Address } from "../address/Address";
 
-class EditAddressService{
+export class EditAddressService{
     private prisma = new PrismaClient();
 
     async execute(addressId: number, address: Address) {

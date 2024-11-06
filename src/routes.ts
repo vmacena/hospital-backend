@@ -5,7 +5,7 @@ import { CreatePatientController } from "./controllers/patient/CreatePatientCont
 import { LoginPatientController } from "./controllers/patient/LoginPatientController";
 import { CreateDoctorController } from "./controllers/doctor/CreateDoctorController";
 import { LoginDoctorController } from "./controllers/doctor/LoginDoctorController";
-import { FindAllPatientsController } from "./controllers/patient/FindAllPatientsController"; // Importação adicionada
+import { FindAllPatientsController } from "./controllers/patient/FindAllPatientsController"; 
 import { GetPatientDataController } from "./controllers/patient/GetPatientDataController";
 import { GetAllLogsController } from "./controllers/log/GetAllLogsController";
 import { FindDoctorAppointmentsAndExamsController } from "./controllers/doctor/FindDoctorAppointmentsAndExamsController";
@@ -16,7 +16,8 @@ import { AdminExamController } from "./controllers/admin/exam/AdminExamControlle
 import { AdminStatsController } from "./controllers/admin/stats/AdminStatsController";
 import { authenticateToken } from "./middlewares/authenticateToken";
 import { checkAdminAccess } from "./middlewares/checkAdminAccess";
-import { AdminDoctorController } from "./controllers/admin/doctor/AdminDoctorController"; // Importação adicionada
+import { AdminDoctorController } from "./controllers/admin/doctor/AdminDoctorController"; 
+import { EditAddressController } from "./controllers/address/EditAddressController";
 
 
 const router = Router();
@@ -38,7 +39,10 @@ const adminAppointmentController = new AdminAppointmentController();
 const adminExamController = new AdminExamController();
 const adminStatsController = new AdminStatsController();
 const adminDoctorController = new AdminDoctorController(); 
+const editAddressController = new EditAddressController();
 
+// address
+router.put("/address/:id", authenticateToken, editAddressController.handle);
 
 // admin
 router.post("/admin/register", createAdminController.handle);
