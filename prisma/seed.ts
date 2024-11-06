@@ -18,6 +18,17 @@ async function main() {
   const admin1 = await prisma.admin.create({
     data: {
       record: "admin",
+      address: {
+        create: {
+          cep: "12345-678",
+          street: "Admin Street",
+          district: "Admin District",
+          state: "Admin State",
+          city: "Admin City",
+          number: 1,
+          complement: "Admin Complement",
+        },
+      },
       accessLevel: { connect: { level: "Admin" } },
     },
   });
@@ -27,43 +38,44 @@ async function main() {
       crm: "123456",
       nameDoctor: "Dr. Vinicius Macena",
       specialty: "Urologista",
+      address: {
+        create: {
+          cep: "12345-678",
+          street: "Doctor Street",
+          district: "Doctor District",
+          state: "Doctor State",
+          city: "Doctor City",
+          number: 2,
+          complement: "Doctor Complement",
+        },
+      },
       accessLevel: { connect: { level: "Doctor" } },
     },
   });
 
   const patient1 = await prisma.patient.create({
     data: {
-      susNumber: BigInt("123456"),
-      namePatient: "Gabriel Manhani",
-      email: "vinicius@example.com",
+      susNumber: BigInt("123456789012345"),
+      namePatient: "Patient Name",
+      email: "patient@example.com",
+      address: {
+        create: {
+          cep: "12345-678",
+          street: "Patient Street",
+          district: "Patient District",
+          state: "Patient State",
+          city: "Patient City",
+          number: 3,
+          complement: "Patient Complement",
+        },
+      },
       accessLevel: { connect: { level: "Patient" } },
     },
   });
-
-  await prisma.appointment.create({
-    data: {
-      patientId: patient1.id,
-      doctorId: doctor1.id,
-      date: new Date(),
-      status: "Agendado",
-    },
-  });
-
-  await prisma.exam.create({
-    data: {
-      patientId: patient1.id,
-      doctorId: doctor1.id,
-      type: "Exame de Prostata",
-      date: new Date(),
-      result: "Pendente",
-    },
-  });
-
-  console.log("Database seeded successfully!");
 }
 
 main()
-  .catch(e => {
+  .catch((e) => {
     console.error(e);
     process.exit(1);
   })
