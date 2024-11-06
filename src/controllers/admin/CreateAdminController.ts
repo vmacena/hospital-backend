@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { CreateAdminService } from "../../services/admin/CreateAdminService";
 
-import { Address } from "../../services/dto/Address"; 
+import { Address } from "../../services/address/Address"; 
 
 interface CreateAdminRequestBody {
   record: string;

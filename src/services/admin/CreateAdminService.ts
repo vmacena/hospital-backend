@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { Address } from "../dto/Address";
+import { Address } from "../address/Address";
 
 class CreateAdminService {
   private prisma = new PrismaClient();
