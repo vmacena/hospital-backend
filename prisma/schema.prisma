@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -88,7 +88,7 @@ model exam {
   result     String?
 }
 
-model address{
+model address {
   id        Int      @id @default(autoincrement())
   cep       String
   street    String
