@@ -15,10 +15,23 @@ class CreateAdminService {
       throw new Error("Admin already registered with this record.");
     }
 
+    const createdAddress = await this.prisma.address.create({
+      data: {
+        cep: address.cep,
+        street: address.street,
+        district: address.district,
+        state: address.state,
+        city: address.city,
+        number: address.number,
+        complement: address.complement,
+      },
+    });
+
     const admin = await this.prisma.admin.create({
       data: {
         record,
         accessLevelId,
+        addressId: createdAddress.id,
       },
     });
 
