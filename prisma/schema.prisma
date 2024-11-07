@@ -20,6 +20,7 @@ model admin {
   record        String      @unique
   address       address     @relation(fields: [addressId], references: [id])
   addressId     Int
+  picture_url   String      @default("")
   logs          logAccess[]
   accessLevel   AccessLevel @relation(fields: [accessLevelId], references: [id])
   accessLevelId Int
@@ -32,6 +33,8 @@ model doctor {
   specialty     String
   address       address     @relation(fields: [addressId], references: [id])
   addressId     Int
+  picture_url   String      @default("")
+
   appointments  appointment[]
   exams         exam[]
   logs          logAccess[]
@@ -46,6 +49,7 @@ model patient {
   email         String      @unique
   address       address     @relation(fields: [addressId], references: [id])
   addressId     Int
+  picture_url   String      @default("")
   appointments  appointment[]
   exams         exam[]
   logs          logAccess[]
