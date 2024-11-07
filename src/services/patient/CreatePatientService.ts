@@ -4,7 +4,7 @@ import { Address } from "../address/Address";
 class CreatePatientService {
   private prisma = new PrismaClient();
 
-  async execute(namePatient: string, email: string, accessLevelId: number, address: Address) {
+  async execute(namePatient: string, email: string, accessLevelId: number, address: Address, picture_url: string) {
     const existingPatient = await this.prisma.patient.findUnique({
       where: {
         email,
@@ -29,7 +29,6 @@ class CreatePatientService {
       },
     });
 
-    // Create the patient with the addressId
     const patient = await this.prisma.patient.create({
       data: {
         susNumber,
@@ -37,6 +36,7 @@ class CreatePatientService {
         email,
         accessLevelId,
         addressId: createdAddress.id,
+        picture_url
       },
     });
 

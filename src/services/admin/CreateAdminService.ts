@@ -4,7 +4,7 @@ import { Address } from "../address/Address";
 class CreateAdminService {
   private prisma = new PrismaClient();
 
-  async execute(record: string, accessLevelId: number, address: Address) {
+  async execute(record: string, accessLevelId: number, address: Address, picture_url:string) {
     const existingAdmin = await this.prisma.admin.findUnique({
       where: {
         record,
@@ -32,6 +32,7 @@ class CreateAdminService {
         record,
         accessLevelId,
         addressId: createdAddress.id,
+        picture_url
       },
     });
 

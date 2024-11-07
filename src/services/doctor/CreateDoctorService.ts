@@ -4,7 +4,7 @@ import { Address } from "../address/Address";
 class CreateDoctorService {
   private prisma = new PrismaClient();
 
-  async execute(crm: string, nameDoctor: string, specialty: string, address: Address) {
+  async execute(crm: string, nameDoctor: string, specialty: string, address: Address, picture_url: string) {
     const existingDoctor = await this.prisma.doctor.findUnique({
       where: {
         crm
@@ -36,7 +36,8 @@ class CreateDoctorService {
         nameDoctor,
         specialty,
         accessLevelId,
-        addressId: createdAddress.id
+        addressId: createdAddress.id,
+        picture_url
       },
     });
 
