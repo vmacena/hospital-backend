@@ -10,7 +10,8 @@ export class AdminDoctorController {
                 select: {
                     nameDoctor: true,
                     specialty: true,
-                    address: true
+                    address: true,
+                    picture_url: true
                 }
             });
             return res.status(200).json(doctors);

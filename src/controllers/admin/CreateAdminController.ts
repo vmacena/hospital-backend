@@ -6,15 +6,16 @@ import { Address } from "../../services/address/Address";
 interface CreateAdminRequestBody {
   record: string;
   address: Address;
+  picture_url: string;
 }
 
 class CreateAdminController {
   async handle(req: Request<{}, {}, CreateAdminRequestBody>, res: Response) {
-    const { record, address } = req.body;
+    const { record, address, picture_url } = req.body;
     const accessLevelId = 1; 
 
     const createAdminService = new CreateAdminService();
-    const admin = await createAdminService.execute(record, accessLevelId, address);
+    const admin = await createAdminService.execute(record, accessLevelId, address, picture_url);
 
     return res.json(admin);
   }
