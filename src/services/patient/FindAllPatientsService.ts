@@ -9,6 +9,7 @@ class FindAllPatientsService {
             const patients = await prisma.patient.findMany({
                 include: {
                     accessLevel: true,
+                    address:true
                 },
             });
 

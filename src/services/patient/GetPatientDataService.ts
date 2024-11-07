@@ -10,6 +10,7 @@ class GetPatientDataService {
       },
       include: {
         accessLevel: true,
+        address: true
       },
     });
 
