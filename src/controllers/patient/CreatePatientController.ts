@@ -7,7 +7,6 @@ interface CreatePatientRequestBody {
   email: string;
   address: Address;
   picture_url: string;
-
 }
 
 class CreatePatientController {
@@ -18,7 +17,7 @@ class CreatePatientController {
     const createPatientService = new CreatePatientService();
 
     try {
-      const patient = await createPatientService.execute(namePatient, email, accessLevelId, address, picture_url);
+      const patient = await createPatientService.execute(namePatient, email, address, picture_url, accessLevelId);
       const responsePatient = {
         ...patient,
         susNumber: patient.susNumber.toString(),
