@@ -28,4 +28,6 @@
 
 ## Ts node
 
+- npm install -g typescript ts-node
+
 - ts-node prisma/seed.ts
