@@ -25,3 +25,7 @@
 - npx prisma generate
 
 - npx prisma studio
+
+## Ts node
+
+- ts-node prisma/seed.ts
