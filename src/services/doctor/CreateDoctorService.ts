@@ -22,7 +22,7 @@ class CreateDoctorService {
         district: address.district,
         state: address.state,
         city: address.city,
-        number: address.number,
+        number: parseInt(address.number, 10),
         complement: address.complement,
       },
     });
