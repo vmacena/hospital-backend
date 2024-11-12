@@ -11,16 +11,19 @@ class LoginPatientController {
       const { patient, token } = await loginPatientService.execute(BigInt(susNumber));
 
       const responsePatient = {
-        ...patient,
+        id: patient.id,
+        name: patient.name,
+        email: patient.email,
+        picture_url: patient.picture_url,
         susNumber: patient.susNumber.toString(),
+        accessLevel: patient.accessLevel,
       };
 
       return res.json({ 
-        id: responsePatient.id, 
-        token, 
-        accessLevel: responsePatient.accessLevel.level, 
-        susNumber: responsePatient.susNumber 
-    }); } catch (error: any) {
+        patient: responsePatient, 
+        token 
+      });
+    } catch (error: any) {
       return res.status(404).json({ message: error.message });
     }
   }

@@ -9,7 +9,14 @@ class LoginDoctorController {
 
     try {
       const { doctor, token } = await loginDoctorService.execute(crm);
-      return res.json({ id: doctor.id, token, accessLevel: doctor.accessLevel.level });
+      return res.json({ 
+        id: doctor.id, 
+        name: doctor.name, 
+        email: doctor.email, 
+        picture_url: doctor.picture_url, 
+        token, 
+        accessLevel: doctor.accessLevel 
+      });
     } catch (error: any) {
       return res.status(404).json({ message: error.message });
     }

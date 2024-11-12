@@ -36,7 +36,16 @@ class LoginDoctorService {
     const createLogAccessService = new CreateLogAccessService();
     await createLogAccessService.execute(doctor.id, "doctor", doctor.accessLevel.level);
 
-    return { doctor, token };
+    return { 
+      doctor: {
+        id: doctor.id,
+        name: doctor.nameDoctor,
+        email: doctor.crm,
+        picture_url: doctor.picture_url, 
+        accessLevel: doctor.accessLevel.level, 
+      },
+      token 
+    };
   }
 }
 

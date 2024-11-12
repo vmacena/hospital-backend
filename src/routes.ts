@@ -18,6 +18,8 @@ import { authenticateToken } from "./middlewares/authenticateToken";
 import { checkAdminAccess } from "./middlewares/checkAdminAccess";
 import { AdminDoctorController } from "./controllers/admin/doctor/AdminDoctorController"; 
 import { EditAddressController } from "./controllers/address/EditAddressController";
+import { GetPatientPhotoController } from "./controllers/patient/GetPatientPhotoController";
+import { GetDoctorPhotoController } from "./controllers/doctor/GetDoctorPhotoController";
 
 
 const router = Router();
@@ -40,6 +42,8 @@ const adminExamController = new AdminExamController();
 const adminStatsController = new AdminStatsController();
 const adminDoctorController = new AdminDoctorController(); 
 const editAddressController = new EditAddressController();
+const getPatientPhotoController = new GetPatientPhotoController();
+const getDoctorPhotoController = new GetDoctorPhotoController();
 
 // address
 router.put("/address/:id", authenticateToken, editAddressController.handle);
@@ -68,12 +72,14 @@ router.post("/doctor/register", createDoctorController.handle);
 router.post("/doctor/login", loginDoctorController.handle);
 router.get("/doctor/patients", authenticateToken, findAllPatientsController.handle);
 router.get("/doctor/appointments-exams", authenticateToken, findDoctorAppointmentsAndExamsController.handle);
+router.get("/doctor/appointments", authenticateToken, findDoctorAppointmentsAndExamsController.handle);
 
 // patient 
 router.post("/patient/register", createPatientController.handle);
 router.post("/patient/login", loginPatientController.handle);
 router.get("/patients", authenticateToken, findAllPatientsController.handle);
 router.get("/patient/", authenticateToken, getPatientDataController.handle);
+router.get("/patient/photo", authenticateToken, getPatientPhotoController.handle);
 
 router.post("/patient/appointments/", authenticateToken, patientAppointmentController.create);
 router.get("/patient/appointments/", authenticateToken, patientAppointmentController.findAll);

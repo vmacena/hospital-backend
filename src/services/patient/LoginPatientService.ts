@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import { CreateLogAccessService } from "../log/CreateLogAccessService";
 
-
 dotenv.config();
 
 class LoginPatientService {
@@ -34,7 +33,17 @@ class LoginPatientService {
     const createLogAccessService = new CreateLogAccessService();
     await createLogAccessService.execute(patient.id, "patient", patient.accessLevel.level);
 
-    return { patient, token };
+    return { 
+      patient: {
+        id: patient.id,
+        name: patient.namePatient,
+        email: patient.email,
+        picture_url: patient.picture_url,
+        susNumber: patient.susNumber.toString(),
+        accessLevel: patient.accessLevel.level,
+      }, 
+      token 
+    };
   }
 }
 
